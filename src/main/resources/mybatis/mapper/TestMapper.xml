@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.TestDao">
+    <resultMap id="base_test" type="com.example.demo.entity.Test">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+    </resultMap>
+    <sql id="userSql">id, name</sql>
+
+    <select id="selectByName" resultMap="base_test" parameterType="com.example.demo.entity.Test">
+        SELECT
+        <include refid="userSql" />
+        FROM test_info.user
+        <where>
+            <if test="name != null">
+                name = %#{name}%
+            </if>
+        </where>
+            LIMIT #{pageNum},#{pageSize}
+    </select>
+</mapper>
